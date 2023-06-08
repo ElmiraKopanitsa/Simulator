@@ -30,7 +30,9 @@ public class BrownBear {
     }
 
     public boolean checkBearLife() {
-
+        if (this.energy <= 0) {
+            this.health -= 50;
+        }
         return  this.health > 0;
     }
 }
