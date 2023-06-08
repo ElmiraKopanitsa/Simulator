@@ -3,7 +3,7 @@ package kz.kopanitsa.task3.brownbear;
 public class BrownBear {
     // создание класса Бурый Медведь
     private int health; // переменная здоровья
-    private int energy; // перемнная энергии
+    private int energy; // переменная энергии
     static final float coefficient = 2.5f; // постоянный коэффициент
 
     public void setHealth(int health) {
@@ -25,7 +25,12 @@ public class BrownBear {
         return this.energy;
     }
 
-    public String checkBear() {
+    public String checkBearHealth() {
         return "\nСамочувствие Медведя: здоровье " + this.getHealth() + "энергия - " + this.getEnergy();
+    }
+
+    public boolean checkBearLife() {
+
+        return  this.health > 0;
     }
 }
