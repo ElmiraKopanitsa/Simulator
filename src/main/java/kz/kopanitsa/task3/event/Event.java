@@ -9,10 +9,10 @@ public class Event {
     // поесть рыбу: +10 к здоровью и -30 к энергии
     // ест крупную добычу: +10 к здоровью
     // готовится к спячке: -50 к энергии
-    //
-    //
-    //
-    //
+    // подрался с другим медведем: -(25*коэффициент) к здоровью и -75 к энергии
+    // залез на дерево: -25 к энергии
+    // медведь встретил охотника и съел его: +20 к здоровью и -50 к энергии
+    // состарился и умер, прожив счастливую жизнь
 
     public  void getEvent(BrownBear bear) {
         // случайная генерация событий
@@ -31,6 +31,14 @@ public class Event {
             eatMeat(bear);
         } else if (eventNumber < 65) {
             prepareForHibernation(bear);
+        } else if (eventNumber < 75) {
+            fight(bear);
+        } else if (eventNumber < 80) {
+            climbTree(bear);
+        } else if (eventNumber < 85) {
+            meetHunter(bear);
+        } else {
+            died(bear);
         }
     }
 
@@ -88,6 +96,38 @@ public class Event {
         int energy = bear.getEnergy() - 50;
         bear.setEnergy(energy);
         System.out.println("Медведь приготовился к спячке. " + bear.checkBearHealth());
+    }
 
+    private void fight(BrownBear bear) {
+        // драка с другим медведем
+        System.out.println("Медведь встретил другого медведя и вступил с ним в драку.");
+        int health = bear.getHealth() - (int) (25 * BrownBear.coefficient);
+        int energy = bear.getEnergy() - 75;
+        bear.setHealth(health);
+        bear.setEnergy(energy);
+        System.out.println("Драка медведей завершилась. " + bear.checkBearHealth());
+    }
+
+    private void climbTree(BrownBear bear) {
+        // завезание на дерево
+        System.out.println("Медведь лезет на дерево.");
+        int energy = bear.getEnergy() - 25;
+        bear.setEnergy(energy);
+        System.out.println("Медведь залез на дерево и слез обратно. " + bear.checkBearHealth());
+    }
+
+    private void meetHunter(BrownBear bear) {
+        // встреча с охотником
+        System.out.println("Медведь встретил охотника.");
+        int health = bear.getHealth() + 20;
+        int energy = bear.getEnergy() - 50;
+        bear.setHealth(health);
+        bear.setEnergy(energy);
+        System.out.println("Медведь съел охотника. " + bear.checkBearHealth());
+    }
+    private void died(BrownBear bear) {
+        // смерть от старости
+        bear.setHealth(0);
+        System.out.println("Медведь прожил счастливую жизнь и умер от старости.");
     }
 }

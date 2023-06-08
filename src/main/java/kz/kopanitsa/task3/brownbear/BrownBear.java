@@ -4,7 +4,7 @@ public class BrownBear {
     // создание класса Бурый Медведь
     private int health; // переменная здоровья
     private int energy; // переменная энергии
-    static final float coefficient = 2.5f; // постоянный коэффициент
+    public static float coefficient = 2.5f; // постоянный коэффициент
 
     public void setHealth(int health) {
         // метод присваивания значения уровня здоровья
@@ -26,7 +26,7 @@ public class BrownBear {
     }
 
     public String checkBearHealth() {
-        return "\nСамочувствие Медведя: здоровье " + this.getHealth() + "энергия - " + this.getEnergy();
+        return "\nСамочувствие Медведя: здоровье - " + this.getHealth() + ", энергия - " + this.getEnergy();
     }
 
     public boolean checkBearLife() {
