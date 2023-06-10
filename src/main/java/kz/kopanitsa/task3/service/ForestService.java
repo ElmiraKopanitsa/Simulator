@@ -1,8 +1,8 @@
-package kz.kopanitsa.task3.event;
+package kz.kopanitsa.task3.service;
 
-import kz.kopanitsa.task3.brownbear.BrownBear;
+import kz.kopanitsa.task3.model.BrownBear;
 
-public class Event {
+public class ForestService {
     // сон:  +5 к здоровью и +50 к энергии
     // поесть ягод: +5 к здоровью и -30 к энергии
     // поесть насекомых: +1 к здоровью и -10 к энергии
@@ -14,28 +14,26 @@ public class Event {
     // медведь встретил охотника и съел его: +20 к здоровью и -50 к энергии
     // состарился и умер, прожив счастливую жизнь
 
-    public  void getEvent(BrownBear bear) {
+    public  void startSimulation(BrownBear bear) {
         // случайная генерация событий
-
         int eventNumber = (int) (Math.random() * 100);
-
-        if (eventNumber < 20) {
+        if (0 <= eventNumber && eventNumber < 20) {
             System.out.println(sleep(bear));
-        } else if (eventNumber < 30) {
-            eatBerriesAndPlants(bear);
-        } else if (eventNumber < 40) {
+        } else if (20 <= eventNumber && eventNumber < 30) {
+            eatBerriesPlant(bear);
+        } else if (30 <= eventNumber && eventNumber < 40) {
             eatInsects(bear);
-        } else if (eventNumber < 50) {
+        } else if (40 <= eventNumber && eventNumber < 50) {
             eatFish(bear);
-        } else if (eventNumber < 60) {
+        } else if (50 <= eventNumber && eventNumber < 60) {
             eatMeat(bear);
-        } else if (eventNumber < 65) {
+        } else if (60 <= eventNumber && eventNumber < 65) {
             prepareForHibernation(bear);
-        } else if (eventNumber < 75) {
+        } else if (65 <= eventNumber && eventNumber < 75) {
             fight(bear);
-        } else if (eventNumber < 80) {
+        } else if (75 <= eventNumber && eventNumber < 80) {
             climbTree(bear);
-        } else if (eventNumber < 85) {
+        } else if (80 <= eventNumber && eventNumber < 85) {
             meetHunter(bear);
         } else {
             died(bear);
@@ -49,17 +47,17 @@ public class Event {
         int energy = bear.getEnergy() + 50;
         bear.setHealth(health);
         bear.setEnergy(energy);
-        return "Медведь поспал. " + bear.checkBearHealth();
+        return "Медведь поспал. " + bear.printBearLifeStatus();
     }
 
-    private void eatBerriesAndPlants(BrownBear bear) {
+    private void eatBerriesPlant(BrownBear bear) {
         // поедание ягод, орехов и прочей растительности
         System.out.println("Медведь ест ягоды.");
         int health = bear.getHealth() + 5;
         int energy = bear.getEnergy() - 30;
         bear.setHealth(health);
         bear.setEnergy(energy);
-        System.out.println("Медведь поел ягоды, орехи и прочую растительность. " + bear.checkBearHealth());
+        System.out.println("Медведь поел ягоды, орехи и прочую растительность. " + bear.printBearLifeStatus());
     }
 
     private void eatInsects (BrownBear bear) {
@@ -69,7 +67,7 @@ public class Event {
         int energy = bear.getEnergy() - 10;
         bear.setHealth(health);
         bear.setEnergy(energy);
-        System.out.println("Медведь поел насекомых. " + bear.checkBearHealth());
+        System.out.println("Медведь поел насекомых. " + bear.printBearLifeStatus());
     }
 
     private void eatFish(BrownBear bear) {
@@ -79,7 +77,7 @@ public class Event {
         int energy = bear.getEnergy() - 30;
         bear.setHealth(health);
         bear.setEnergy(energy);
-        System.out.println("Медведь поел рыбу. " + bear.checkBearHealth());
+        System.out.println("Медведь поел рыбу. " + bear.printBearLifeStatus());
     }
 
     private void eatMeat(BrownBear bear) {
@@ -87,7 +85,7 @@ public class Event {
         System.out.println("Медведь ест мясо.");
         int health = bear.getHealth() + 10;
         bear.setHealth(health);
-        System.out.println("Медведь поел мясо. " + bear.checkBearHealth());
+        System.out.println("Медведь поел мясо. " + bear.printBearLifeStatus());
     }
 
     private void prepareForHibernation(BrownBear bear) {
@@ -95,17 +93,17 @@ public class Event {
         System.out.println("Медведь готовится к спячке.");
         int energy = bear.getEnergy() - 50;
         bear.setEnergy(energy);
-        System.out.println("Медведь приготовился к спячке. " + bear.checkBearHealth());
+        System.out.println("Медведь приготовился к спячке. " + bear.printBearLifeStatus());
     }
 
     private void fight(BrownBear bear) {
         // драка с другим медведем
         System.out.println("Медведь встретил другого медведя и вступил с ним в драку.");
-        int health = bear.getHealth() - (int) (25 * BrownBear.coefficient);
+        int health = bear.getHealth() - (int) (25 * BrownBear.HEALTH_PRODUCE_COEFFICIENT);
         int energy = bear.getEnergy() - 75;
         bear.setHealth(health);
         bear.setEnergy(energy);
-        System.out.println("Драка медведей завершилась. " + bear.checkBearHealth());
+        System.out.println("Драка медведей завершилась. " + bear.printBearLifeStatus());
     }
 
     private void climbTree(BrownBear bear) {
@@ -113,7 +111,7 @@ public class Event {
         System.out.println("Медведь лезет на дерево.");
         int energy = bear.getEnergy() - 25;
         bear.setEnergy(energy);
-        System.out.println("Медведь залез на дерево и слез обратно. " + bear.checkBearHealth());
+        System.out.println("Медведь залез на дерево и слез обратно. " + bear.printBearLifeStatus());
     }
 
     private void meetHunter(BrownBear bear) {
@@ -123,8 +121,9 @@ public class Event {
         int energy = bear.getEnergy() - 50;
         bear.setHealth(health);
         bear.setEnergy(energy);
-        System.out.println("Медведь съел охотника. " + bear.checkBearHealth());
+        System.out.println("Медведь съел охотника. " + bear.printBearLifeStatus());
     }
+
     private void died(BrownBear bear) {
         // смерть от старости
         bear.setHealth(0);

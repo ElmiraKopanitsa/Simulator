@@ -1,15 +1,16 @@
-package kz.kopanitsa.task3.brownbear;
+package kz.kopanitsa.task3.model;
 
 public class BrownBear {
     // создание класса Бурый Медведь
     private int health; // переменная здоровья
     private int energy; // переменная энергии
-    public static float coefficient = 2.5f; // постоянный коэффициент
+    public static final float HEALTH_PRODUCE_COEFFICIENT = 2.5f; // постоянный коэффициент
 
     public void setHealth(int health) {
         // метод присваивания значения уровня здоровья
         this.health = health;
     }
+
     public int getHealth () {
         // метод получения уровня здоровья
         return this.health;
@@ -25,7 +26,7 @@ public class BrownBear {
         return this.energy;
     }
 
-    public String checkBearHealth() {
+    public String printBearLifeStatus() {
         return "\nСамочувствие Медведя: здоровье - " + this.getHealth() + ", энергия - " + this.getEnergy();
     }
 
